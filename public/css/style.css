@@ -121,7 +121,7 @@ p { font-weight: 400; }
 .nav-dropdown.show { display: block; }
 .nav-dropdown a {
   display: block; padding: 10px 20px; font-weight: 600;
-  transition: var(--transition);
+  color: var(--black); transition: var(--transition);
 }
 .nav-dropdown a:hover { background: var(--light-gray); color: var(--red); }
 .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
