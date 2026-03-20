@@ -31,7 +31,7 @@
     const container = document.getElementById('tab-content');
     if (activeTab === 'owned') {
       if (!myProjects.owned.length) {
-        container.innerHTML = '<div class="empty-state"><div class="icon">📋</div><h3>No projects yet</h3><p>Create your first project and start building your team!</p><a href="/create-project.html" class="btn btn-red">Create Project</a></div>';
+        container.innerHTML = '<div class="empty-state"><div class="icon">//</div><h3>No projects yet</h3><p>Create your first project and start building your team!</p><a href="/create-project.html" class="btn btn-red">Create Project</a></div>';
         return;
       }
       container.innerHTML = '<div class="projects-grid">' + myProjects.owned.map(projectCard).join('') + '</div>';
@@ -86,6 +86,7 @@
     joinBtn.addEventListener('click', async () => {
       const code = inviteInput.value.trim();
       if (!code) return showToast('Enter an invite code', 'error');
+      if (!(await requireCompleteProfile())) return;
       joinBtn.disabled = true; joinBtn.textContent = 'Joining...';
       try {
         const project = await api('/projects/join/' + encodeURIComponent(code), { method: 'POST' });

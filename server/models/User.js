@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
   avatar:    { type: String, default: '' },
   github:    { type: String, default: '' },
   linkedin:  { type: String, default: '' },
+  resume:    { type: String, default: '' },
   createdAt: { type: Date, default: Date.now }
 });
 

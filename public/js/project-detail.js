@@ -13,7 +13,7 @@
     try {
       project = await api('/projects/' + projectId);
     } catch (err) {
-      container.innerHTML = '<div class="empty-state"><div class="icon">😕</div><h3>Project not found</h3><p style="color:var(--gray);font-size:0.85rem;margin-bottom:16px">' + escHtml(err.message) + '</p><a href="/projects.html" class="btn btn-dark">Back to Projects</a></div>';
+      container.innerHTML = '<div class="empty-state"><div class="icon">!</div><h3>Project not found</h3><p style="color:var(--gray);font-size:0.85rem;margin-bottom:16px">' + escHtml(err.message) + '</p><a href="/projects.html" class="btn btn-dark">Back to Projects</a></div>';
       return;
     }
 
@@ -79,12 +79,11 @@ const members = project.members.filter(m => m && m._id).map(m => {
     let ownerToolbar = '';
     if (isOwner) {
       const statusLabel = project.status === 'open' ? 'Close Project' : project.status === 'in-progress' ? 'Mark Completed' : 'Reopen Project';
-      const statusIcon = project.status === 'open' ? '🔒' : project.status === 'completed' ? '🔓' : '✅';
       ownerToolbar =
         '<div class="project-toolbar">'
-        + '<button class="btn btn-sm btn-dark" id="edit-project-btn">✏️ Edit Project</button>'
-        + '<button class="btn btn-sm btn-outline" id="status-btn">' + statusIcon + ' ' + statusLabel + '</button>'
-        + '<button class="btn btn-sm btn-outline" id="delete-project-btn" style="border-color:var(--red);color:var(--red)">🗑️ Delete Project</button>'
+        + '<button class="btn btn-sm btn-dark" id="edit-project-btn">Edit Project</button>'
+        + '<button class="btn btn-sm btn-outline" id="status-btn">' + statusLabel + '</button>'
+        + '<button class="btn btn-sm btn-outline" id="delete-project-btn" style="border-color:var(--red);color:var(--red)">Delete Project</button>'
         + '</div>';
     }
 
@@ -128,7 +127,7 @@ const members = project.members.filter(m => m && m._id).map(m => {
       + '<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px"><span class="project-category ' + project.category + '">' + escHtml(project.category) + '</span><span style="color:var(--gray)">' + formatDate(project.createdAt) + '</span>'
       + '<span class="skill-tag-outline" style="margin-left:auto">' + project.status + '</span></div>'
       + '<h1>' + escHtml(project.title) + '</h1>'
-      + '<div class="project-meta" style="margin:16px 0"><span>👥 ' + project.members.length + '/' + project.teamSize + ' members</span></div>'
+      + '<div class="project-meta" style="margin:16px 0"><span>' + project.members.length + '/' + project.teamSize + ' members</span></div>'
       + '<div style="margin-top:16px">' + actions + '</div>'
       + ownerToolbar
       + '</div>'
@@ -144,7 +143,10 @@ const members = project.members.filter(m => m && m._id).map(m => {
 
     /* Bind apply button */
     const applyBtn = document.getElementById('apply-btn');
-    if (applyBtn) applyBtn.addEventListener('click', () => document.getElementById('apply-modal').classList.add('show'));
+    if (applyBtn) applyBtn.addEventListener('click', async () => {
+      if (!(await requireCompleteProfile())) return;
+      document.getElementById('apply-modal').classList.add('show');
+    });
 
     /* Bind kick buttons */
     container.querySelectorAll('.kick-btn').forEach(btn => {

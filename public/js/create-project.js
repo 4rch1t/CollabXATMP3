@@ -1,6 +1,7 @@
 /* Create Project page */
-(function () {
+(async function () {
   if (!requireAuth()) return;
+  if (!(await requireCompleteProfile())) return;
 
   const skillsInput = setupTagInput('skills-wrapper', 'skills-hidden');
 

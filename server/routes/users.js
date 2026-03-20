@@ -15,7 +15,7 @@ router.get('/me', auth, async (req, res) => {
 // Update current user
 router.put('/me', auth, async (req, res) => {
   try {
-    const allowed = ['name', 'bio', 'skills', 'interests', 'github', 'linkedin', 'avatar'];
+    const allowed = ['name', 'bio', 'skills', 'interests', 'github', 'linkedin', 'resume', 'avatar'];
     const updates = {};
     for (const key of allowed) { if (req.body[key] !== undefined) updates[key] = req.body[key]; }
 

@@ -1,11 +1,24 @@
 const express = require('express');
 const Project = require('../models/Project');
 const Application = require('../models/Application');
+const User = require('../models/User');
 const auth = require('../middleware/auth');
 const router = express.Router();
 
+// Middleware: require completed profile (bio + at least 1 skill)
+async function requireProfile(req, res, next) {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    if (!user.bio || !user.skills || user.skills.length === 0) {
+      return res.status(403).json({ error: 'Please complete your profile (bio and at least one skill) before continuing.' });
+    }
+    next();
+  } catch (err) { res.status(500).json({ error: err.message }); }
+}
+
 // Create project
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, requireProfile, async (req, res) => {
   try {
     const { title, description, category, requiredSkills, teamSize } = req.body;
     const project = await Project.create({
@@ -58,7 +71,7 @@ router.get('/my-applications', auth, async (req, res) => {
 });
 
 // Join via invite code — MUST be before /:id
-router.post('/join/:code', auth, async (req, res) => {
+router.post('/join/:code', auth, requireProfile, async (req, res) => {
   try {
     const project = await Project.findOne({ inviteCode: req.params.code });
     if (!project) return res.status(404).json({ error: 'Invalid invite code' });
@@ -129,7 +142,7 @@ router.delete('/:id', auth, async (req, res) => {
 });
 
 // Apply to project
-router.post('/:id/apply', auth, async (req, res) => {
+router.post('/:id/apply', auth, requireProfile, async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
     if (!project) return res.status(404).json({ error: 'Project not found' });

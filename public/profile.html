@@ -31,6 +31,18 @@
 
 <main class="page-wrapper" style="background:var(--cream)">
   <div class="container profile-page">
+    <!-- Profile Completion Progress -->
+    <div class="profile-progress-card" id="profile-progress-card" style="display:none">
+      <div class="progress-header">
+        <h3>Profile Completion</h3>
+        <span class="progress-percent" id="progress-percent">0%</span>
+      </div>
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progress-bar-fill" style="width:0%"></div>
+      </div>
+      <p class="progress-hint" id="progress-hint"></p>
+    </div>
+
     <div class="profile-header" id="profile-header">
       <div class="profile-avatar" id="profile-avatar">?</div>
       <div class="profile-info">
@@ -58,6 +70,7 @@
           <h3>Links</h3>
           <p><strong>GitHub:</strong> <span id="profile-github">—</span></p>
           <p><strong>LinkedIn:</strong> <span id="profile-linkedin">—</span></p>
+          <p><strong>Resume:</strong> <span id="profile-resume">—</span></p>
         </div>
         <button class="btn btn-dark" id="edit-btn" style="margin-top:8px">Edit Profile</button>
       </div>
@@ -94,6 +107,11 @@
           <div class="form-group">
             <label for="edit-linkedin">LinkedIn URL</label>
             <input type="text" id="edit-linkedin" class="form-input" placeholder="https://linkedin.com/in/yourusername">
+          </div>
+          <div class="form-group">
+            <label for="edit-resume">Resume Link</label>
+            <input type="url" id="edit-resume" class="form-input" placeholder="https://drive.google.com/your-resume">
+            <span class="form-hint">Share a link to your resume (Google Drive, Dropbox, personal site, etc.)</span>
           </div>
           <div style="display:flex;gap:12px">
             <button type="submit" class="btn btn-red" style="flex:1">Save Changes</button>

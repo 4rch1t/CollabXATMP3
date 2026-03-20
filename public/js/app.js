@@ -7,6 +7,18 @@ function clearAuth() { localStorage.removeItem('collabx_token'); localStorage.re
 function isLoggedIn() { return !!getToken(); }
 function requireAuth() { if (!isLoggedIn()) { window.location.href = '/login.html'; return false; } return true; }
 
+async function requireCompleteProfile() {
+  try {
+    const user = await api('/users/me');
+    if (!user.bio || !user.skills || user.skills.length === 0) {
+      showToast('Complete your profile before continuing (bio and at least one skill required)', 'error');
+      setTimeout(() => { window.location.href = '/profile.html'; }, 1200);
+      return false;
+    }
+    return true;
+  } catch (e) { return false; }
+}
+
 async function api(endpoint, options = {}) {
   const token = getToken();
   const headers = { 'Content-Type': 'application/json' };
