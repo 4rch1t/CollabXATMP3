@@ -269,6 +269,8 @@ p { font-weight: 400; }
 .auth-card .btn { width: 100%; margin-top: 8px; }
 .auth-footer { text-align: center; margin-top: 24px; font-size: 0.95rem; color: var(--gray); }
 .auth-footer a { color: var(--red); font-weight: 700; }
+.divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; color: var(--gray); font-size: 0.9rem; }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #ddd; }
 .auth-error {
   background: #FDE8E8; color: #C62B0E; border: 2px solid #C62B0E;
   border-radius: var(--radius-sm); padding: 12px; margin-bottom: 16px;

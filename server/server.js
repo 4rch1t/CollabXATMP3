@@ -33,6 +33,11 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/projects', require('./routes/projects'));
 app.use('/api/messages', require('./routes/messages'));
 
+// Expose Google Client ID to the frontend
+app.get('/api/config/google-client-id', (req, res) => {
+  res.json({ clientId: process.env.GOOGLE_CLIENT_ID || '' });
+});
+
 /* ---------- Socket.io real-time ---------- */
 const onlineUsers = new Map();
 
