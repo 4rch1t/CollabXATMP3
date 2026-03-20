@@ -55,13 +55,18 @@
   }
 
   // Initialize Google Sign-In with server-provided client ID
-  fetch('/api/config/google-client-id').then(r => r.json()).then(({ clientId }) => {
-    if (!clientId) return;
-    google.accounts.id.initialize({ client_id: clientId, callback: handleGoogleLogin });
-    google.accounts.id.renderButton(document.getElementById('google-btn'), {
-      theme: 'outline', size: 'large', text: 'signin_with', shape: 'rectangular', width: 350
+  function initGoogle() {
+    fetch('/api/config/google-client-id').then(r => r.json()).then(({ clientId }) => {
+      if (!clientId) return;
+      google.accounts.id.initialize({ client_id: clientId, callback: handleGoogleLogin });
+      google.accounts.id.renderButton(document.getElementById('google-btn'), {
+        theme: 'outline', size: 'large', text: 'signin_with', shape: 'rectangular', width: 350
+      });
     });
-  });
+  }
+  // Wait for the Google library to load
+  if (typeof google !== 'undefined' && google.accounts) { initGoogle(); }
+  else { window.addEventListener('load', () => { initGoogle(); }); }
 
   document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
