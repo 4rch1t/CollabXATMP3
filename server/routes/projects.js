@@ -154,6 +154,20 @@ router.get('/:id/applications', auth, async (req, res) => {
   } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+// Leave a project (member voluntarily leaves)
+router.post('/:id/leave', auth, async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (!project) return res.status(404).json({ error: 'Project not found' });
+    if (project.owner.toString() === req.user.id) return res.status(400).json({ error: 'Owner cannot leave. Transfer ownership or delete the project.' });
+    if (!project.members.map(m => m.toString()).includes(req.user.id)) return res.status(400).json({ error: 'You are not a member' });
+    project.members = project.members.filter(m => m.toString() !== req.user.id);
+    if (project.leader && project.leader.toString() === req.user.id) project.leader = project.owner;
+    await project.save();
+    res.json({ message: 'Left the project' });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 // Kick a member (owner/leader only)
 router.delete('/:id/members/:memberId', auth, async (req, res) => {
   try {

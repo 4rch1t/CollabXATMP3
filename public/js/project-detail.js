@@ -69,9 +69,23 @@ const members = project.members.filter(m => m && m._id).map(m => {
     } else if (isOwner) {
       actions = '<span class="skill-tag" style="background:var(--black)">You own this project</span>';
     } else if (isMember) {
-      actions = '<span class="skill-tag" style="background:#4CAF50">You\'re on this team! ✓</span>';
+      actions = '<span class="skill-tag" style="background:#4CAF50">You\'re on this team! ✓</span>'
+        + ' <button class="btn btn-sm btn-outline" id="leave-btn" style="margin-left:8px">Leave Team</button>';
     } else {
       actions = '<button class="btn btn-red" id="apply-btn">Apply to Join →</button>';
+    }
+
+    /* Owner management toolbar */
+    let ownerToolbar = '';
+    if (isOwner) {
+      const statusLabel = project.status === 'open' ? 'Close Project' : project.status === 'in-progress' ? 'Mark Completed' : 'Reopen Project';
+      const statusIcon = project.status === 'open' ? '🔒' : project.status === 'completed' ? '🔓' : '✅';
+      ownerToolbar =
+        '<div class="project-toolbar">'
+        + '<button class="btn btn-sm btn-dark" id="edit-project-btn">✏️ Edit Project</button>'
+        + '<button class="btn btn-sm btn-outline" id="status-btn">' + statusIcon + ' ' + statusLabel + '</button>'
+        + '<button class="btn btn-sm btn-outline" id="delete-project-btn" style="border-color:var(--red);color:var(--red)">🗑️ Delete Project</button>'
+        + '</div>';
     }
 
     /* Invite code section (owner/leader only) */
@@ -111,10 +125,12 @@ const members = project.members.filter(m => m && m._id).map(m => {
 
     container.innerHTML =
       '<div class="project-detail-header">'
-      + '<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px"><span class="project-category ' + project.category + '">' + escHtml(project.category) + '</span><span style="color:var(--gray)">' + formatDate(project.createdAt) + '</span></div>'
+      + '<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px"><span class="project-category ' + project.category + '">' + escHtml(project.category) + '</span><span style="color:var(--gray)">' + formatDate(project.createdAt) + '</span>'
+      + '<span class="skill-tag-outline" style="margin-left:auto">' + project.status + '</span></div>'
       + '<h1>' + escHtml(project.title) + '</h1>'
-      + '<div class="project-meta" style="margin:16px 0"><span>👥 ' + project.members.length + '/' + project.teamSize + ' members</span><span>📂 ' + project.status + '</span></div>'
+      + '<div class="project-meta" style="margin:16px 0"><span>👥 ' + project.members.length + '/' + project.teamSize + ' members</span></div>'
       + '<div style="margin-top:16px">' + actions + '</div>'
+      + ownerToolbar
       + '</div>'
       + '<div class="project-detail-body">'
       + '<div class="profile-section"><h3>Description</h3><p style="white-space:pre-wrap">' + escHtml(project.description) + '</p></div>'
@@ -169,6 +185,80 @@ const members = project.members.filter(m => m && m._id).map(m => {
         load();
       } catch (err) { showToast(err.message, 'error'); }
     });
+
+    /* Leave team */
+    const leaveBtn = document.getElementById('leave-btn');
+    if (leaveBtn) leaveBtn.addEventListener('click', async () => {
+      if (!confirm('Are you sure you want to leave this team?')) return;
+      try {
+        await api('/projects/' + projectId + '/leave', { method: 'POST' });
+        showToast('You left the team', 'success');
+        load();
+      } catch (err) { showToast(err.message, 'error'); }
+    });
+
+    /* Edit project */
+    const editBtn = document.getElementById('edit-project-btn');
+    if (editBtn) editBtn.addEventListener('click', () => {
+      document.getElementById('edit-title').value = project.title;
+      document.getElementById('edit-description').value = project.description;
+      document.getElementById('edit-category').value = project.category;
+      document.getElementById('edit-teamsize').value = project.teamSize;
+      document.getElementById('edit-modal').classList.add('show');
+    });
+
+    /* Save edit */
+    const editSave = document.getElementById('edit-save');
+    if (editSave) editSave.onclick = async () => {
+      editSave.disabled = true; editSave.textContent = 'Saving...';
+      try {
+        await api('/projects/' + projectId, {
+          method: 'PUT',
+          body: {
+            title: document.getElementById('edit-title').value,
+            description: document.getElementById('edit-description').value,
+            category: document.getElementById('edit-category').value,
+            teamSize: parseInt(document.getElementById('edit-teamsize').value)
+          }
+        });
+        document.getElementById('edit-modal').classList.remove('show');
+        showToast('Project updated!', 'success');
+        load();
+      } catch (err) { showToast(err.message, 'error'); }
+      editSave.disabled = false; editSave.textContent = 'Save Changes';
+    };
+
+    /* Change status */
+    const statusBtn = document.getElementById('status-btn');
+    if (statusBtn) statusBtn.addEventListener('click', async () => {
+      let newStatus;
+      if (project.status === 'open') newStatus = 'in-progress';
+      else if (project.status === 'in-progress') newStatus = 'completed';
+      else newStatus = 'open';
+      try {
+        await api('/projects/' + projectId, { method: 'PUT', body: { status: newStatus } });
+        showToast('Status changed to ' + newStatus, 'success');
+        load();
+      } catch (err) { showToast(err.message, 'error'); }
+    });
+
+    /* Delete project */
+    const deleteBtn = document.getElementById('delete-project-btn');
+    if (deleteBtn) deleteBtn.addEventListener('click', () => {
+      document.getElementById('delete-modal').classList.add('show');
+    });
+    const deleteConfirm = document.getElementById('delete-confirm');
+    if (deleteConfirm) deleteConfirm.onclick = async () => {
+      deleteConfirm.disabled = true; deleteConfirm.textContent = 'Deleting...';
+      try {
+        await api('/projects/' + projectId, { method: 'DELETE' });
+        showToast('Project deleted', 'success');
+        setTimeout(() => window.location.href = '/dashboard.html', 500);
+      } catch (err) {
+        showToast(err.message, 'error');
+        deleteConfirm.disabled = false; deleteConfirm.textContent = 'Yes, Delete';
+      }
+    };
   }
 
   async function kickMember(memberId) {

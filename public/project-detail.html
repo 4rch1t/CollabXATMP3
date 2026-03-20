@@ -10,20 +10,22 @@
 
 <nav class="navbar">
   <div class="nav-left">
-    <a href="/projects.html">Projects</a>
-    <a href="/create-project.html">Create Project</a>
+    <a href="/projects.html" class="nav-link-highlight">🔍 Find Projects</a>
+    <a href="/dashboard.html" class="auth-only">Dashboard</a>
+    <a href="/create-project.html" class="auth-only">Create Project</a>
   </div>
   <a href="/" class="nav-logo"><img src="/logo.jpeg" alt="CollabX" class="nav-logo-img"></a>
   <div class="nav-right">
-    <a href="/messages.html" class="auth-only" style="font-weight:700">Messages</a>
+    <a href="/messages.html" class="auth-only">Messages</a>
     <a href="/login.html" class="btn nav-btn guest-only" style="padding:8px 24px">Log In</a>
     <div class="nav-user auth-only" id="nav-user-btn">
       <div class="nav-avatar" id="nav-user-avatar">?</div>
       <span id="nav-user-name"></span>
     </div>
-    <div class="nav-dropdown auth-only" id="nav-dropdown">
+    <div class="nav-dropdown" id="nav-dropdown">
       <a href="/dashboard.html">Dashboard</a>
       <a href="/profile.html">Profile</a>
+      <a href="/messages.html">Messages</a>
       <a href="#" onclick="logout();return false;">Log Out</a>
     </div>
   </div>
@@ -46,6 +48,50 @@
     <div style="display:flex;gap:12px">
       <button class="btn btn-red" id="apply-submit" style="flex:1">Submit Application</button>
       <button class="btn btn-outline" onclick="document.getElementById('apply-modal').classList.remove('show')" style="flex:0">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Project Modal -->
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal">
+    <h2>Edit Project</h2>
+    <div class="form-group">
+      <label for="edit-title">Title</label>
+      <input type="text" id="edit-title" class="form-input" required>
+    </div>
+    <div class="form-group">
+      <label for="edit-description">Description</label>
+      <textarea id="edit-description" class="form-textarea" rows="5" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="edit-category">Category</label>
+      <select id="edit-category" class="form-select">
+        <option value="hackathon">Hackathon</option>
+        <option value="project">Project</option>
+        <option value="startup">Startup</option>
+        <option value="research">Research</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="edit-teamsize">Team Size</label>
+      <input type="number" id="edit-teamsize" class="form-input" min="2" max="20">
+    </div>
+    <div style="display:flex;gap:12px">
+      <button class="btn btn-red" id="edit-save" style="flex:1">Save Changes</button>
+      <button class="btn btn-outline" onclick="document.getElementById('edit-modal').classList.remove('show')" style="flex:0">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div class="modal-overlay" id="delete-modal">
+  <div class="modal" style="text-align:center">
+    <h2 style="color:var(--red)">Delete Project?</h2>
+    <p style="color:var(--gray);margin-bottom:24px">This will permanently delete the project, remove all team members, and delete all applications. This action cannot be undone.</p>
+    <div style="display:flex;gap:12px">
+      <button class="btn btn-red" id="delete-confirm" style="flex:1">Yes, Delete</button>
+      <button class="btn btn-outline" onclick="document.getElementById('delete-modal').classList.remove('show')" style="flex:1">Cancel</button>
     </div>
   </div>
 </div>

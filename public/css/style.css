@@ -13,6 +13,9 @@ body {
   background: #FFF8F0;
   line-height: 1.5;
   overflow-x: hidden;
+  background-image:
+    radial-gradient(circle, rgba(0,0,0,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
 }
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
@@ -77,13 +80,25 @@ p { font-weight: 400; }
 .navbar {
   position: sticky; top: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 32px;
+  padding: 14px 32px;
   background: var(--red);
   border-bottom: 3px solid #b8280e;
+  backdrop-filter: blur(12px);
 }
-.nav-left, .nav-right { display: flex; align-items: center; gap: 32px; }
+.nav-left, .nav-right { display: flex; align-items: center; gap: 28px; }
 .nav-left a, .nav-right a { font-weight: 700; font-size: 0.95rem; color: var(--white); transition: var(--transition); }
 .nav-left a:hover, .nav-right a:hover { color: var(--yellow); }
+.nav-link-highlight {
+  background: rgba(255,255,255,0.15);
+  padding: 6px 16px !important;
+  border-radius: var(--radius-full);
+  border: 1.5px solid rgba(255,255,255,0.3);
+  transition: var(--transition);
+}
+.nav-link-highlight:hover {
+  background: rgba(255,255,255,0.25) !important;
+  border-color: rgba(255,255,255,0.5);
+}
 .nav-logo {
   font-size: 2rem; font-weight: 900; letter-spacing: 2px;
   color: var(--black); text-transform: uppercase;
@@ -338,7 +353,13 @@ p { font-weight: 400; }
 .tag-item .remove-tag:hover { opacity: 1; }
 
 /* ---------- Dashboard ---------- */
-.page-wrapper { min-height: calc(100vh - 80px); padding: 40px 0; }
+.page-wrapper {
+  min-height: calc(100vh - 80px); padding: 40px 0;
+  background-image:
+    radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-color: var(--cream);
+}
 .page-header {
   margin-bottom: 40px;
   display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
@@ -698,6 +719,13 @@ p { font-weight: 400; }
   background: var(--light-gray); padding: 10px 20px;
   border: 2px dashed var(--black); border-radius: var(--radius-sm);
   letter-spacing: 3px; user-select: all;
+}
+
+/* Project Management Toolbar */
+.project-toolbar {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  margin-top: 20px; padding-top: 20px;
+  border-top: 2px solid var(--light-gray);
 }
 
 /* ====================================================
