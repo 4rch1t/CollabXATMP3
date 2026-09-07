@@ -37,13 +37,13 @@
       container.innerHTML = '<div class="projects-grid">' + myProjects.owned.map(projectCard).join('') + '</div>';
     } else if (activeTab === 'joined') {
       if (!myProjects.memberOf.length) {
-        container.innerHTML = '<div class="empty-state"><div class="icon">👥</div><h3>No teams joined yet</h3><p>Browse projects and apply to join a team!</p><a href="/projects.html" class="btn btn-yellow">Browse Projects</a></div>';
+        container.innerHTML = '<div class="empty-state"><div class="empty-state-mark" aria-hidden="true"></div><h3>No teams joined yet</h3><p>Browse projects and apply to join a team!</p><a href="/projects.html" class="btn btn-yellow">Browse Projects</a></div>';
         return;
       }
       container.innerHTML = '<div class="projects-grid">' + myProjects.memberOf.map(projectCard).join('') + '</div>';
     } else {
       if (!myApps.length) {
-        container.innerHTML = '<div class="empty-state"><div class="icon">📩</div><h3>No applications</h3><p>Apply to projects to start collaborating!</p><a href="/projects.html" class="btn btn-yellow">Browse Projects</a></div>';
+        container.innerHTML = '<div class="empty-state"><div class="empty-state-mark" aria-hidden="true"></div><h3>No applications</h3><p>Apply to projects to start collaborating!</p><a href="/projects.html" class="btn btn-yellow">Browse Projects</a></div>';
         return;
       }
       container.innerHTML = myApps.map(appItem).join('');
@@ -57,7 +57,7 @@
       + '<h3>' + escHtml(p.title) + '</h3>'
       + '<p>' + escHtml(p.description).substring(0, 120) + (p.description.length > 120 ? '...' : '') + '</p>'
       + '<div class="tags-container" style="margin-bottom:12px">' + skills + '</div>'
-      + '<div class="project-meta"><span>👥 ' + (p.members ? p.members.length : 1) + '/' + p.teamSize + '</span><span>📂 ' + p.status + '</span></div>'
+      + '<div class="project-meta"><span>' + (p.members ? p.members.length : 1) + '/' + p.teamSize + ' members</span><span>' + p.status + '</span></div>'
       + '</a>';
   }
 
