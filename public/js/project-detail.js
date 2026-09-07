@@ -51,7 +51,7 @@ const members = project.members.filter(m => m && m._id).map(m => {
 
       let kickBtn = '';
       if (canManage && !mIsOwner && m._id !== (currentUser && currentUser.id)) {
-        kickBtn = '<button class="kick-btn" data-id="' + m._id + '" data-name="' + escHtml(m.name || '') + '" title="Remove member">✕</button>';
+        kickBtn = '<button class="kick-btn" data-id="' + m._id + '" data-name="' + escHtml(m.name || '') + '" title="Remove member">X</button>';
       }
 
       return '<div class="member-chip-wrap">'
@@ -69,7 +69,7 @@ const members = project.members.filter(m => m && m._id).map(m => {
     } else if (isOwner) {
       actions = '<span class="skill-tag" style="background:var(--black)">You own this project</span>';
     } else if (isMember) {
-      actions = '<span class="skill-tag" style="background:#4CAF50">You\'re on this team! ✓</span>'
+      actions = '<span class="skill-tag" style="background:#4CAF50">You\'re on this team</span>'
         + ' <button class="btn btn-sm btn-outline" id="leave-btn" style="margin-left:8px">Leave Team</button>';
     } else {
       actions = '<button class="btn btn-red" id="apply-btn">Apply to Join →</button>';

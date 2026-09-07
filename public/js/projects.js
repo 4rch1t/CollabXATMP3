@@ -16,7 +16,7 @@
 
       const projects = await api('/projects?' + params.toString());
       if (!projects.length) {
-        container.innerHTML = '<div class="empty-state"><div class="icon">🔍</div><h3>No projects found</h3><p>Try adjusting your search or filters</p></div>';
+        container.innerHTML = '<div class="empty-state"><div class="empty-state-mark" aria-hidden="true"></div><h3>No projects found</h3><p>Try adjusting your search or filters</p></div>';
         return;
       }
       container.innerHTML = '<div class="projects-grid">' + projects.map(projectCard).join('') + '</div>';
@@ -35,7 +35,7 @@
       + '<div class="tags-container" style="margin-bottom:12px">' + skills + '</div>'
       + '<div class="project-card-footer">'
       + '<div class="project-owner"><div class="avatar-sm">' + avatarInitial(ownerName) + '</div>' + escHtml(ownerName) + '</div>'
-      + '<span style="color:var(--gray);font-size:0.85rem">👥 ' + (p.members ? p.members.length : 1) + '/' + p.teamSize + '</span>'
+      + '<span style="color:var(--gray);font-size:0.85rem">' + (p.members ? p.members.length : 1) + '/' + p.teamSize + ' members</span>'
       + '</div></a>';
   }
 
