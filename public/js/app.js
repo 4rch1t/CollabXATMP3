@@ -145,3 +145,21 @@ async function checkUnread() {
     });
   } catch (e) { /* not logged in or error */ }
 }
+
+// Check if user is admin and show admin link
+async function checkAdminAccess() {
+  if (!isLoggedIn()) return;
+  try {
+    const res = await fetch('/api/admin/stats', {
+      headers: { 'Authorization': 'Bearer ' + getToken() }
+    });
+    if (res.ok) {
+      const adminLink = document.getElementById('admin-link');
+      if (adminLink) adminLink.style.display = 'inline-block';
+    }
+  } catch (e) { /* not admin */ }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  checkAdminAccess();
+});
