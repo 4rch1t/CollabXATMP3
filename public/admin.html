@@ -37,7 +37,7 @@
     }
     .admin-tab {
       padding: 12px 24px;
-      font-weight: 800;
+      font-weight: 700;
       cursor: pointer;
       border-bottom: 3px solid transparent;
       margin-bottom: -3px;
@@ -85,7 +85,7 @@
     }
     .stat-card p {
       color: var(--gray);
-      font-weight: 600;
+      font-weight: 500;
       text-transform: uppercase;
       font-size: 0.9rem;
     }
@@ -109,7 +109,7 @@
     th {
       padding: 16px;
       text-align: left;
-      font-weight: 800;
+      font-weight: 700;
       text-transform: uppercase;
       font-size: 0.85rem;
       letter-spacing: 0.5px;
@@ -132,7 +132,7 @@
       background: var(--white);
       color: var(--red);
       font-size: 0.9rem;
-      font-weight: 900;
+      font-weight: 800;
       cursor: pointer;
       transition: var(--transition);
     }
@@ -146,7 +146,7 @@
       padding: 4px 12px;
       border-radius: var(--radius-full);
       font-size: 0.75rem;
-      font-weight: 800;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
@@ -208,7 +208,7 @@
       padding: 10px 16px;
       border: var(--border);
       border-radius: var(--radius-full);
-      font-weight: 600;
+      font-weight: 500;
       cursor: pointer;
       background: var(--white);
     }
@@ -220,7 +220,7 @@
       padding: 16px;
       margin-bottom: 24px;
       display: none;
-      font-weight: 600;
+      font-weight: 500;
     }
     .success-msg {
       background: #E8F5E9;
@@ -230,7 +230,7 @@
       padding: 16px;
       margin-bottom: 24px;
       display: none;
-      font-weight: 600;
+      font-weight: 500;
     }
   </style>
 </head>
@@ -245,7 +245,6 @@
   <a href="/" class="nav-logo"><img src="/logo.png" alt="CollabX" class="nav-logo-img"></a>
   <div class="nav-right">
     <a href="/messages.html" class="auth-only">Messages</a>
-    <a href="#" id="admin-link" class="auth-only" style="display: none; color: var(--yellow); border-bottom: 2px solid var(--yellow); padding: 4px 12px;">Admin</a>
     <div class="nav-user auth-only" id="nav-user-btn">
       <div class="nav-avatar" id="nav-user-avatar">?</div>
       <span id="nav-user-name"></span>
@@ -264,7 +263,7 @@
   <div class="admin-container">
     <div class="admin-header">
       <h1>Admin Dashboard</h1>
-      <div style="font-weight: 700; color: var(--gray);">
+      <div style="font-weight: 600; color: var(--gray);">
         Logged in as: <span id="admin-email" style="color: var(--red);"></span>
       </div>
     </div>
@@ -393,7 +392,6 @@
         document.getElementById('admin-email').textContent = user.email;
         document.getElementById('nav-user-name').textContent = user.name;
         document.getElementById('nav-user-avatar').textContent = user.name[0].toUpperCase();
-        document.getElementById('admin-link').style.display = 'inline-block';
       }
 
       loadStats();

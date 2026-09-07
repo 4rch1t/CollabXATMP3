@@ -1,4 +1,3 @@
-
 # CollabX
 
 CollabX is a platform for finding the right people to build with. Whether you're starting a hackathon project, launching a startup, or diving into research, finding team members who actually complement your skills is hard. This platform makes that easier.
@@ -26,4 +25,11 @@ Anyone who wants to build something with other people but doesn't want to stick 
 
 Most team-finding happens through personal networks or by default (your friends). That limits who you meet and who gets to participate in projects. CollabX takes the friction out of finding new collaborators based on what they can actually do, not just who you already know.
 
+Live website: https://collab-x-n32g.onrender.com
 
+
+<img width="1600" height="762" alt="image" src="https://github.com/user-attachments/assets/1776f9a4-a7fd-47df-a4d8-3c81aac87755" />
+<img width="1600" height="774" alt="image" src="https://github.com/user-attachments/assets/1babe683-e4aa-4dd4-9171-895db4b1a977" />
+<img width="1600" height="771" alt="image" src="https://github.com/user-attachments/assets/49471cd7-fd80-4a3d-b7b0-42a6347a55ee" />
+<img width="1600" height="763" alt="image" src="https://github.com/user-attachments/assets/3aa4b96e-bfc1-45f4-bd4c-d4b8fd8cc1df" />
+<img width="659" height="328" alt="image" src="https://github.com/user-attachments/assets/c2a58bad-0738-47aa-80f6-e10d9a8c0e84" />
